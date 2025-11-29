@@ -1,4 +1,4 @@
-# Online Exam Platform
+ # Online Exam Platform
 
 An ASP.NET Core MVC web application designed to manage online exams with secure authentication, real-time timers, automated grading, and an easy-to-use interface for both students and teachers.
 
@@ -50,18 +50,7 @@ An ASP.NET Core MVC web application designed to manage online exams with secure 
 
 ---
 
-##  Screenshots
-
-*(Add screenshots here after uploading images)*  
-Example:
-
-```
-/Screenshots/LoginPage.png  
-/Screenshots/StudentExam.png  
-/Screenshots/AdminDashboard.png
-```
-
----
+ 
 
 ##  How to Run the Project
 
@@ -86,11 +75,8 @@ Example:
 
 ---
 
-##  Contact
-
-For questions, suggestions, or collaborations, feel free to reach out!
-
----
+ 
+ 
 
 ##  License
 
