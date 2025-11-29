@@ -1,0 +1,108 @@
+﻿ @model Models.ViewModel.TakeExamVM
+@{
+    var endTime = DateTime.UtcNow.AddSeconds(Model.Duration * 60);
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
+
+ }
+ <div class="container">
+     <div class="card-header">
+         <div class="row mb-3">
+ 
+            <div class="col-md-6">
+                <p><strong>Exam:</strong> @Model.ExamName</p>
+                <div><strong>Timer:</strong> <span id="Minutes"></span>:<span id="Secondes"></span></div>
+            </div>
+
+             <div class="col-md-6 text-md-end">
+                 <p><strong>Total Questions:</strong> @Model.QuestionsCount</p>
+                <p><strong>Current:</strong> @(Model.CurrentIndex + 1)/@Model.Questions.Count()</p>
+             </div>
+         </div>
+       
+     </div>
+     <div class="d-flex">
+         <div class="card-body">
+             <form id="examform" method="post" asp-area="User" asp-controller="TakeExam" asp-action="SubmitQuestion">
+                 <input  type="text" name="id" value="@Model.ExamId"  hidden/>
+                <input type="text" name="score" value="@Model.Questions[Model.CurrentIndex].Score" hidden />
+                    <p>@Model.Questions[Model.CurrentIndex].QuestionText</p>
+                   <input type="text" name="questionid" value="@Model.Questions[Model.CurrentIndex].Id" hidden />
+              
+                        @for (int j =0;j<Model.Questions[Model.CurrentIndex].Options.Count;j++)
+                        {
+                    <div class="p-2">
+                        @{
+                            bool ischecked = Model.Answers.ContainsKey(Model.Questions[Model.CurrentIndex].Id) && 
+                            Model.Answers[Model.Questions[Model.CurrentIndex].Id] == Model.Questions[Model.CurrentIndex].Options[j];
+                        }
+                        <input type="radio" name="selectedoption"
+                               @(ischecked == true ? "checked" : "")
+                            value="@Model.Questions[Model.CurrentIndex].Options[j]" />
+                        <label>@Model.Questions[Model.CurrentIndex].Options[j]</label>
+                            </div>
+                        }
+                 
+              
+               
+                 <div class="row">
+                     <div class="col-12 d-flex justify-content-between">
+                        @if (Model.CurrentIndex !=0)
+                        {
+                            <form method="post">
+
+                                <input type="text" hidden name="id" value="@Model.ExamId" />
+                              
+                                <button asp-action="PrevBtn">previos question</button>
+                            </form>
+                        }
+                     
+                    
+                        @if(Model.CurrentIndex< Model.Questions.Count() -1){
+                            <button class="btn btn-primary"  asp-action="NxtBtn" type="submit">next question</button>
+                        } 
+                        else
+                        {
+                         <a class="btn btn-primary" asp-route-id="@Model.StudentExamId" asp-action="SubmitExam">Submit</a>
+                        }
+                      
+                     </div>
+                 </div>
+             </form>
+         </div>
+         <div class="sidebar ms-3 bg-light" style="min-width: 100px;">
+             <div class="d-flex justify-content-between align-items-center mb-2">
+                 <div class="text-start">
+                     <p>Questions</p>
+                 </div>
+                 <div class="text-end">
+                     <a href="#"></a><i class="bi bi-arrow-left"></i></a>
+                 </div>
+             </div>
+
+             <div class="row row-cols-4">
+            @for (int j = 0; j < Model.Questions.Count(); j++)
+            {
+                <div class="col">
+                        <form method="post">
+                            <input type="text" name="studentexamid" hidden value="@Model.StudentExamId" />
+                            <input type="text" name="currquestion" hidden value="@j" />
+                            <button class="btn @(Model.CurrentIndex == j ? "btn-primary" : "btn-outline-primary") w-100" asp-action="NavigateToQ">@(j + 1)</button>
+                        </form>
+                </div>
+            }
+            </div>
+             <div class="sidebar ms-3" style="min-width: 100px;">
+             </div>
+         </div>
+     </div>
+ </div>
+ @section Scripts{
+    @*   Do not forget make timer *@
+    <script name="_ValidationScriptsPartial"></script>
+    <input type="number" hiddin value="@timeRemaining" id="timeRemaining" />
+    <input type="number" hiddin value="@Model.AttempID" id="AttempID" />
+    <input type="number" hiddin value="@Model.ExamId" id="ExamId" />
+    <script src="~/js/Timer.js"></script>
+ 
+ }
+

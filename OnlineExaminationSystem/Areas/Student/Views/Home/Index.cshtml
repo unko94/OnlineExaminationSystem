@@ -1,0 +1,60 @@
+﻿@model Models.ViewModel.StudentHomeVM
+<section class="mt-3"> 
+    <div class="d-flex justify-content-around text-center">
+        <div>
+         
+            <p class="mb-1 text-muted">Available</p>
+            <h5 class="fw-bold">@Model.Available</h5>
+        </div>
+       <div>
+       
+            <p class="mb-1 text-muted">Completed</p>
+            <h5 class="fw-bold">@Model.Completed</h5>
+       </div>
+       <div>
+         
+            <p class="mb-1 text-muted">Avg Score </p>
+            <h5 class="fw-bold">@Model.AvgScore</h5>
+      </div>
+    </div>  
+</section>
+
+<section class="mb-3">
+    <h5 class="text-center mb-3">Recent Results</h5>
+    <table id="availableexamstable" class="table table-bordered  table-striped text-center align-middle">
+        <thead>
+            <tr>
+                <th>Exam Name</th>
+                <th>Category</th>
+                <th>Duration</th>
+             
+                <th>Action</th>
+            </tr>
+        </thead>
+    </table>
+</section>
+ <section class="mb-3">
+        <h5 class="text-center mb-3">Recent Results</h5>
+    <table id="recentresultseble" class="table table-bordered  table-striped text-center align-middle">
+            <thead>
+            <tr> 
+                <th>Exam Name</th>
+                <th>Score</th>
+                <th>Status</th>
+                <th>Result</th>
+            </tr>
+            </thead>
+        </table>  
+</section>
+ 
+ 
+
+ <div class="d-flex justify-content-center gap-3 my-4"> 
+    <button class="btn btn-primary">Take Exam</button>
+    <button class="btn btn-outline-secondary">View All Results</button>
+</div>
+ 
+ 
+ @section Scripts {
+     <script src="~/js/RecentResultsTable.js"></script>
+ }

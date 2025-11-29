@@ -1,0 +1,85 @@
+﻿ 
+
+
+@model Models.ViewModel.AdminDashboardVM
+@{
+    ViewData["Title"] = "Admin Home";
+}
+
+<div class="container mt-5">
+
+    <!-- Welcome Section -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Welcome, @Model.UserName</h2>
+        <p class="text-muted">
+            Manage your platform, users, exams, and content from here.
+        </p>
+    </div>
+
+    
+    <div class="row g-4">
+
+        <div class="col-md-3 col-6">
+            <div class="card shadow-sm border-0 text-center p-3 hover-shadow">
+                <i class="bi bi-people fs-1 text-primary"></i>
+                <h6 class="mt-2 text-muted">Students</h6>
+                <h3 class="fw-bold">@Model.TotalStudents</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <div class="card shadow-sm border-0 text-center p-3 hover-shadow">
+                <i class="bi bi-person-badge fs-1 text-success"></i>
+                <h6 class="mt-2 text-muted">Teachers</h6>
+                <h3 class="fw-bold">@Model.TotalTeachers</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <div class="card shadow-sm border-0 text-center p-3 hover-shadow">
+                <i class="bi bi-clipboard-check fs-1 text-info"></i>
+                <h6 class="mt-2 text-muted">Exams</h6>
+                <h3 class="fw-bold">@Model.TotalExams</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <div class="card shadow-sm border-0 text-center p-3 hover-shadow">
+                <i class="bi bi-hourglass-split fs-1 text-warning"></i>
+                <h6 class="mt-2 text-muted">In Progress</h6>
+                <h3 class="fw-bold">@Model.ExamsInProgress</h3>
+            </div>
+        </div>
+
+    </div>
+ 
+    <div class="text-center mt-5">
+        <h4 class="fw-semibold mb-3">Quick Actions</h4>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+            <a asp-controller="ManagUsers" asp-action="UsersMangment" class="btn btn-primary px-4 py-2 shadow-sm">
+                <i class="bi bi-people"></i> Manage Users
+            </a>
+
+            <a asp-controller="Question" asp-action="Index" class="btn btn-secondary px-4 py-2 shadow-sm">
+                <i class="bi bi-person-badge"></i> Manage Questions 
+            </a>
+
+            <a asp-controller="Exam" asp-action="Index" class="btn btn-success px-4 py-2 shadow-sm">
+                <i class="bi bi-file-earmark-text"></i> Manage Exams
+            </a>
+
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .hover-shadow:hover {
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        transform: translateY(-3px);
+        transition: 0.2s;
+    }
+</style>
+

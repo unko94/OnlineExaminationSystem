@@ -1,0 +1,92 @@
+﻿@model Models.ViewModel.RegisterVM
+<div class="container mt-5">
+    <div class="row justify-content-center">
+       
+        <div class="col-md-6">
+            @if (TempData["RegisterError"] !=null)
+            {
+                <div class="alert alert-danger text-center">
+                    @TempData["RegisterError"]
+                </div>
+            }
+      <div class="card">
+                <div class="card-header bg-primary text-white text-center text-center">
+           <h4>Register</h4>
+      </div>
+     <div class="card-body">
+         <form method="post" asp-antiforgery="true">
+            <div class="row px-4 py-3">
+           <label asp-for="@Model.firstname" class="form-label p-2"></label>
+           <input class="form-control" type="text" asp-for="@Model.firstname" placeholder="Firstname"/>
+                <span asp-validation-for="@Model.firstname" class="text-danger"></span>
+            </div>
+
+             <div class="row px-4  py-3">
+            <label asp-for="@Model.lastname" class="form-label p-2"></label>
+            <input class="form-control" type="text" asp-for="@Model.lastname" placeholder="LastName" />
+                <span asp-validation-for="@Model.lastname" class="text-danger"></span>
+            </div>
+
+            <div class="row px-4  py-3">
+            <label asp-for="@Model.username" class="form-label p-2"></label>
+            <input class="form-control" type="text" asp-for="@Model.username" placeholder="Username" />
+            <span asp-validation-for="@Model.username" class="text-danger"></span>
+            </div>
+
+             <div class="row px-4  py-3">
+               <label asp-for="@Model.email" class="form-label p-2"></label>
+              <input class="form-control" type="text" asp-for="@Model.email" placeholder="Email" />
+                <span asp-validation-for="@Model.email" class="text-danger"></span>
+            </div>
+
+            <div class="row px-4  py-3">
+             <label asp-for="@Model.password" class="form-label p-2"></label>
+            <input class="form-control" type="password" id="password" asp-for="@Model.password" placeholder="Password" />
+             <div class="form-check mt-2">
+            <input id="togglebtn" type="checkbox" />
+             <label class="form-check-label" for="togglebtn">show password</label>
+            </div>
+                <span asp-validation-for="@Model.password" class="text-danger"></span>
+
+            </div>
+
+            <div class="row px-4  py-3">
+            <label asp-for="@Model.confirmpassword" class="form-label p-2"></label>
+            <input type="password" class="form-control" id="password" asp-for="@Model.confirmpassword" placeholder="Confirm Password" />
+            <span asp-validation-for="@Model.confirmpassword" class="text-danger"></span>
+
+            <div class="form-check mt-2">
+             <input id="togglebtn" type="checkbox"/>
+             <label class="form-check-label" for="togglebtn">show password</label>
+            </div>
+            
+            </div>
+            <div class="row text-center">
+
+            <button class="btn btn-primary" asp-action="Register">Register</button>
+            </div>
+         </form>
+        <p>Already have an account? <a asp-action="LogIn">sign in</a></p>
+        
+         </div>
+      </div>
+   </div>
+ </div>
+ </div>
+ @section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script>
+        const   password = document.getElementById('password');
+        const   togglepassword = document.getElementById('togglebtn');
+        togglepassword.addEventListener('click',function (){
+            const   type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+
+            password.setAttribute('type',type);
+
+            togglepassword.textContent = type === 'password' ? 'Show' : 'Hide';
+        });
+            
+
+    </script>
+   
+ }

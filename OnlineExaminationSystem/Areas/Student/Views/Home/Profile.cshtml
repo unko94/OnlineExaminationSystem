@@ -1,0 +1,75 @@
+﻿@using Utility
+@model Models.ViewModel.ProfileVM
+<div class="container my-4">
+    <div class="card mb-4">
+        <div class="card-header text-center">
+            <h3> @Model.FullName Profile</h3>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header bg-light">Personal Information</div>
+        <div class="card-body">
+            <table class="table table-borderless mb-0">
+                <tr><th>Full Name:</th><td>@Model.FullName</td></tr>
+                <tr><th>User Name:</th><td>@Model.UserName</td></tr>
+                <tr><th>Student ID:</th><td>@Model.Id</td></tr>
+                <tr><th>Email:</th><td>@Model.Email</td></tr>
+                <tr><th>Phone:</th><td>@Model.Phone</td></tr>
+            </table>
+        </div>
+    </div>
+
+    @if (User.Identity !=null && User.Identity.IsAuthenticated  && User.IsInRole(SD.Role_Student))
+    {
+        <div class="card mb-4">
+            <div class="card-header bg-light">Exam Statistics</div>
+            <div class="card-body">
+                <table class="table table-borderless mb-0">
+                    <tr><th>Total Exams Taken:</th><td>@Model.TotalExamsTaken</td></tr>
+                    <tr><th>Average Score:</th><td>@Model.AvgScore</td></tr>
+                    <tr><th>Exams Passed:</th><td>@Model.ExamsPassed</td></tr>
+                    <tr><th>Exams Failed:</th><td>@Model.ExamsFailed</td></tr>
+                    <tr><th>Last Exam Date:</th><td></td></tr>
+                </table>
+            </div>
+        </div>
+    }
+
+    @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole(SD.Role_Teacher))
+    {
+        <div class="card mb-4">
+            <div class="card-header bg-light">Teaching Overview</div>
+            <div class="card-body">
+                <table class="table table-borderless mb-0">
+                    <tr><th>Total Exams Created:</th><td>@Model.TotalCreatedExams</td></tr>
+                    <tr><th>Total Questions Uploaded:</th><td>@Model.TotalQuestionsUploaded</td></tr>
+                    <tr><th>Average Exam Rating:</th><td></td></tr>
+                     
+                </table>
+            </div>
+        </div>
+    }
+    
+    <div class="card mb-4">
+        <div class="card-header bg-light">Settings</div>
+        <div class="card-body">
+            <div class="btn-group mb-2">
+              
+                <a class="btn btn-secondary" asp-area="RigAndLog" asp-controller="Account" asp-action="ForgetPasswordEmail">Change Password</a>
+                <a class="btn btn-info" asp-action="EditProfile">Edit Contact Info</a>
+            </div>
+            <div>
+                <button class="btn btn-danger">Delete Account</button>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mb-4">
+        <form method="post">
+            <button class="btn btn-danger" type="submit" asp-area="RigAndLog" asp-controller="Account" asp-action="Logout">
+                Logout
+                <i class="bi bi-box-arrow-left"></i>
+            </button>
+        </form>
+      
+    </div>
+</div>

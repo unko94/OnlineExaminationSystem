@@ -1,0 +1,75 @@
+﻿ 
+@model Models.ViewModel.QuestionMangmentVM
+ 
+<div class="modal fade" id="assignExamModal" tabindex="-1" aria-labelledby="assignExamLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="assignExamLabel">Assign Student to Exam</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="assignExamForm" method="post" @* action="/Exam/AssignStudent" *@>
+                    <div class="mb-3">
+                        <label for="examname" class="form-label">examname</label>
+                        <input type="text" name="examname" placeholder="Exam Name" />
+                    </div>
+                     
+                    <div class="mb-3">
+                        <label for="duration" class="form-label">Duration</label>
+                        <input type="number" name="duration" placeholder="Duration" />
+                    </div>
+                    
+                    
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="assgintoexam" asp-action="AssginToExam" @* form="assignExamForm" *@>Assign</button>
+                        </div>   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex mt-5">
+   
+       
+       @await Html.PartialAsync("_SideBar")
+       
+ <div class="flex-grow-1 p-4">
+
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <a class="btn btn-primary" asp-controller="Question" asp-action="Create">Add Questions</a>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#assignExamModal">
+                            Assign To Exam
+                        </button>
+
+                    </div>
+                </div>
+         
+    <table id="questiontable" class="table table-bordered table-striped">
+         <thead>
+            <tr>
+                <th>Question Title</th>
+                <th>Question Text</th>
+                <th>Score</th>
+                <th>Difficulty</th>
+                <th>Category</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+      </table>
+       
+     </div>
+    </div>
+ 
+ 
+
+@section Scripts{
+    <script>
+        var selected = @Html.Raw(ViewBag.SelectedQ ?? "[]");
+      
+    </script>
+    <script src="~/js/Question.js"></script> 
+}

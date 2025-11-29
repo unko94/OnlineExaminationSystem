@@ -1,0 +1,31 @@
+﻿ 
+
+ 
+ 
+ 
+<div class="d-flex mt-5"> 
+       @await Html.PartialAsync("_SideBar")
+       
+ <div class="flex-grow-1 p-4">
+        
+    <table id="examtable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Exam Name</th>
+            <th>Exam Score</th>
+            <th>Total Questions</th>
+            <th>Category</th>
+            <th>Created By</th>
+            <th>Created At</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+</table>
+       </div>
+   </div>
+
+ 
+@section Scripts{
+    <script src="~/js/Exam.js"></script>
+}

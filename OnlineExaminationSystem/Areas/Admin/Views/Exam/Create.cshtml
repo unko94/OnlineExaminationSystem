@@ -1,0 +1,48 @@
+﻿@model Models.ViewModel.CreateExamVM
+
+<div class="card">
+    <div class="card-header bg-primary shadow"><h4 class="text-center">Edit Exam</h4></div>
+    <div class="card-body">
+        <form method="post">
+          @*   <input type="text" asp-for="Exam.Id" hidden /> *@
+            <div class="row">
+                <div class="col-6">
+                    <label asp-for="Exam.ExamName" class="form-label p-2"></label>
+                    <input type="text" asp-for="Exam.ExamName" class="form-control" placeholder="Exam Name" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <label asp-for="QuetionsNumbers" class="form-label p-2"></label>
+                    <input type="text" asp-for="QuetionsNumbers" class="form-control" placeholder="How Many Questions" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label asp-for="Difficulty" class="form-label p-2"></label>
+                    <select asp-for="Difficulty" class="form-select">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <label asp-for="Exam.CategoryId" class="form-label p-2"></label>
+                    <select asp-for="Exam.CategoryId" asp-items="@Model.Categories"  class="form-select">
+                        <option>--Select Category--</option>
+                    </select>
+            
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+            <button  type="submit" class="btn btn-primary" asp-action="Create"> create exam</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@model Models.ViewModel.ContactUsVM
+<section id="contact" class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Contact Us</h2>
+        <p class="text-secondary">Have questions or need support? Reach out to us!</p>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post">
+                <div class="mb-3">
+                    <label  asp-for="@Model.FullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control"  asp-for="@Model.FullName" placeholder="Enter your full name">
+                    <span asp-validation-for="@Model.FullName"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.Email"   class="form-label">Email address</label>
+                    <input type="email" class="form-control" asp-for="@Model.Email" placeholder="name@example.com">
+                    <span asp-validation-for="@Model.Email"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control"  asp-for="@Model.Message" rows="4" placeholder="Type your message..."></textarea>
+                    <span asp-validation-for="@Model.Message"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" asp-action="ContactUs" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script name="_ValidationScriptsPartial"></script>
+}

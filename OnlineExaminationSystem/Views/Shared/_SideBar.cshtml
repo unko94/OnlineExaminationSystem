@@ -1,0 +1,80 @@
+﻿ 
+
+@using Utility
+
+<head>
+    <style>
+       
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #000;  
+         
+        }
+
+ 
+        .sidebar-link {
+            display: block;
+            padding: 10px 15px;
+            color: #fff !important;  
+            background-color: transparent;
+        }
+
+             
+            .sidebar-link:hover {
+                background-color: #1a1a1a;
+            }
+
+         
+        .sidebar-active {
+            background-color: #000 !important; / 
+            color: #000 !important;  
+            font-weight: bold;
+        }
+
+            
+            .sidebar-link i,
+            .sidebar-active i {
+                color: inherit !important;
+            }
+    </style>
+</head>
+
+<div class="sidebar d-flex flex-column p-3 m-0">
+    <a asp-action="Index" class="text-white text-decoration-none mb-3">
+        <i class="bi bi-house"></i> Dashboard
+    </a>
+
+    <hr class="text-white">
+
+    <ul class="nav nav-pills flex-column mb-auto">
+
+        @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole(SD.Role_Admin))
+        {
+            <li>
+                <a asp-controller="ManagUsers" asp-action="UsersMangment"
+                   class="sidebar-link @(ViewContext.RouteData.Values["controller"]!.ToString() == "ManagUsers"
+                                                         ? "sidebar-active" : "")">
+                <i class="bi bi-person"></i> Users Management
+            </a>
+        </li>
+                }
+
+        <li>
+            <a asp-controller="Exam" asp-action="Index"
+               class="sidebar-link @(ViewContext.RouteData.Values["controller"]!.ToString() == "Exam"
+                                                 ? "sidebar-active" : "")">
+                <i class="bi bi-clipboard2"></i> Exams Management
+            </a>
+        </li>
+
+        <li>
+            <a asp-controller="Question" asp-action="Index"
+               class="sidebar-link @(ViewContext.RouteData.Values["controller"]!.ToString() == "Question"
+                                                 ? "sidebar-active" : "")">
+                <i class="bi bi-list"></i> Questions & Categories
+            </a>
+        </li>
+
+    </ul>
+</div>

@@ -1,0 +1,127 @@
+﻿@model Models.Model.Question
+ 
+
+<div class="card">
+        <div class="card-header bg-primary shadow">
+            <h4 class="text-center"> Create Question</h4>
+        </div>
+        <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            <input type="text" class="form-control" asp-for="Id" hidden placeholder="Question Name" />
+                <div class="row">
+                    <div class="col-6 ">
+                        <label asp-for="QuestionName" class="form-label p-2">Question Name</label>
+                        <input type="text" class="form-control" asp-for="QuestionName" placeholder="Question Name" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 ">
+                        <label asp-for="QuestionText" class="form-label p-2">Question Text</label>
+                        <input type="text" class="form-control" asp-for="QuestionText" placeholder="Question Text" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 ">
+                        <label asp-for="Score" class="form-label p-2">Score</label>
+                        <input type="text" class="form-control" asp-for="Score" placeholder=" Score" />
+                    </div>
+                </div>
+            <div id="all-options-wrapper">
+                @for (int i = 0; i < Model.Options.Count; i++)
+                {
+                    <div class="option-row">
+                    <div class="row">
+                        <div class="col-6 ">
+                            <label asp-for="Options" class="form-label p-2">Option </label>
+                            <input type="text" class="form-control" asp-for="@Model.Options[i]" placeholder=" option" />
+                        </div>
+                        <a href="#" class="deleteOption"> <i class="bi bi-dash-circle"></i></a>
+                    </div>
+                    </div>
+                }
+
+                <div id="options-container"> </div>
+            </div>
+           
+              <div class="row">
+                <div class="col-6 pt-2">
+                    <label asp-for="Options" class="form-label p-2"></label>
+                    <a id="addOptionBtn" class="btn btn-primary" onclick="AddOption()"><i class="bi bi-plus-square"></i></a>
+                </div>
+               </div>
+               <div class="row">
+                   <div class="col-6">
+                       <input type="file" class="form-input" name="file" placeholder="Choose file"></input>
+                   </div>
+               </div>
+           
+                <div class="row pt-2">
+                    <div class="col-6">
+                        <button class="btn btn-primary" asp-action="Edit"> Edit</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+@section Scripts{
+    <script>
+        let index = @Model.Options.Count;
+        function AddOption()
+        {
+            return `<div class="option-row">
+                    <div class="row">
+                    <div class="col-6 ">
+                         <label asp-for="Options" class="form-label p-2">Option ${index}</label>
+                         <input type="text" class="form-control" name="Options[${index}]" placeholder="option" />
+                    </div>
+                    <a href="#" class="deleteOption"> <i class="bi bi-dash-circle"></i></a> 
+                </div>
+              
+                `;
+        }
+
+        document.getElementById('addOptionBtn').addEventListener('click', function() {
+         
+              const container = document.getElementById('options-container');
+              const wrapper = document.createElement('div');
+              wrapper.innerHTML = AddOption();
+              container.appendChild(wrapper);
+                  index++;
+        });
+           //this code i am not very  understand it
+        const AllOptionsWrapper = document.getElementById('all-options-wrapper');
+        AllOptionsWrapper.addEventListener('click',function(e){
+            const deletebtn = e.target.closest('.deleteOption');
+            if(deletebtn)
+            {
+                e.preventDefault();
+                e.target.closest('.option-row').remove()
+                reindex();
+
+            }
+          
+        });
+        //this code i am not very  understand it 
+        function reindex()
+        {
+             const allreminingrows = document.querySelectorAll('#all-options-wrapper .option-row');
+             allreminingrows.forEach((row,newindex)=>  {
+                 const input = row.querySelector('input');
+                 const label = row.querySelector('label');
+
+                 if(input){
+                     input.name =  `Options[${newindex}]`;
+                 }
+                 if (label) {
+
+                label.innerHTML = `Option ${newindex}`;
+             }
+             });
+             index = allreminingrows.length;
+        }
+         
+    </script>
+}

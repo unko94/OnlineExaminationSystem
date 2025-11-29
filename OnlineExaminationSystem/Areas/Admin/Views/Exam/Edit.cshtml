@@ -1,0 +1,125 @@
+﻿@model  Models.ViewModel.EditExamVM
+<form method="post"> 
+ <div class="container">
+     <div class="container">
+    @*      <input type="text" hidden  name ="ExamId" value="@Model.ExamId" /> *@
+            <input type="hidden" asp-for="ExamId" />
+
+         <div class="row">
+             <div class="col-6">
+                    <label asp-for="@Model.ExamName" class="form-label" >Exam Name</label>
+                <input type="text" asp-for="@Model.ExamName" class="form-control" placeholder="Exam Name" />
+                <span  asp-validation-for="@Model.ExamName"></span>
+             </div>
+          
+         </div>
+        <div class="row">
+            <div class="col-6">
+               <label asp-for="@Model.Duration" class="form-label">Duration</label>
+            <input type="number" asp-for="@Model.Duration" class="form-control" placeholder="duration" />
+                    <span asp-validation-for="@Model.Duration"></span>
+            </div>
+            
+        </div>
+     </div>
+     <div class="table">
+          <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Question Text</th>
+                    <th>Score</th>
+                    <th>Category</th>
+                    <th>Difficulty</th>
+                    <th>Selected</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var Q in Model.Questions)
+                {
+                   <tr>
+                        <td>@Q.Key.QuestionName</td>
+                        <td>@Q.Key.QuestionText</td>
+                        <td>@Q.Key.Score</td>
+                        <td>@Q.Key.Category.CategoryName</td>
+                        <td>@Q.Key.Difficulty</td>
+                        <td> 
+                       
+                                <input type="checkbox" class="ides" name="SelectedQ" value="@Q.Key.Id" @(Q.Value ? "checked" : "") />
+
+                        </td>
+                   </tr>
+               
+                }
+                  
+              </tbody>
+          </table>
+     </div>
+ </div>
+ <div class="row">
+     <div class="col-6">
+         <strong id="SelectedQCount">  </strong>
+     </div>
+    <div class="col-6">
+            <strong id="ScoreCount"></strong>
+    </div>
+ </div>
+ <div class="row">
+     <div class="col-6">
+         <button id="CheckCategory" asp-action="Edit">Save Changes</button>
+     </div>
+     
+ </div>
+</form>
+ @section Scripts{
+     <script>
+          
+         function updatecounts(){
+                 let totalScore = 0;
+                 let SelectedQCount = document.querySelectorAll('.ides:checked');
+                 document.getElementById('SelectedQCount').innerText ="Selected Questions : " + SelectedQCount.length;
+                 SelectedQCount.forEach(ch=>{
+                      let row = ch.closest('tr');
+                      let cells = row.querySelectorAll('td');
+                      totalScore +=parseFloat(cells[2].innerText);
+                      console.log(cells[2]);
+                         
+                 });
+                document.getElementById('ScoreCount').innerText =" Total Score : " + totalScore ;
+             }
+
+             updatecounts();
+             let allCheckboxes = document.querySelectorAll('.ides')
+
+             allCheckboxes.forEach(ch=>{ch.addEventListener('change',updatecounts);});
+       
+            document.getElementById('CheckCategory').addEventListener('click',function(e){
+                let  QS = document.querySelectorAll('.ides:checked')
+            console.log("Save Changes clicked");
+            e.preventDefault();
+            for(let i =1;i<QS.length;i++){
+                let Firstrow = QS[i-1].closest('tr');
+                let Firstcells = Firstrow.querySelectorAll('td');
+
+                  let Secondtrow = QS[i].closest('tr');
+                let Secondcells = Secondtrow.querySelectorAll('td');
+
+
+                console.log(Firstcells[3]);
+                console.log(Secondcells[3]);
+                if( Firstcells[3].innerText !=  Secondcells[3].innerText){
+                     
+                    alert("All questions must  have the same Category");
+                    return;
+                }
+
+            }
+            //this refers to the element that triggered the event in my case is button
+            this.closest('form').submit();
+            });
+        console.log(SelectedQCount);
+
+
+     </script>
+    <script src="_ValidationScriptsPartial"></script>
+ }

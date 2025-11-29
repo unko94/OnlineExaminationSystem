@@ -1,0 +1,71 @@
+﻿@model Models.ViewModel.LogInVM
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+
+            @if (TempData["LoginError"] != null)
+        {
+            <div class="alert alert-danger text-center">
+                @TempData["LoginError"]
+            </div>
+        }
+   <div class="card">
+
+    <div class="card-header bg-primary text-white text-center text-center">
+        <h4>Log In</h4>
+    </div>
+    <div class="card-body">
+        <form method="post">
+
+            <div class="row px-4 py-3">
+                    <label asp-for="@Model.Email" class="form-label p-2"></label>
+                    <div class="input-group">
+                         <input type="text" asp-for="@Model.Email" class="form-control" placeholder="Email" />
+
+                    </div> 
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+
+             <div class="row px-4 py-3">
+                    <label asp-for="@Model.Password" class="form-label p-2"></label>
+                     <div class="input-group">
+                     <input type="password" asp-for="@Model.Password" id="password" class="form-control" placeholder="Password" />
+                      <span class="input-group-text" id="togglebtn">
+                         <i class="bi bi-eye-fill"></i>
+                      </span>
+                     </div>
+                 <a asp-action="ForgetPasswordEmail">Forget Password?</a>
+            </div>
+            <button class="btn btn-primary" asp-action="LogIn">Log In</button>
+            
+        </form>
+
+    </div>
+     </div>
+        </div>
+    </div>
+       </div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+
+    <script>
+        const password = document.getElementById('password');
+        const  togglepassword = document.getElementById('togglebtn');
+         const icon = togglepassword.querySelector('i');
+
+        togglepassword.addEventListener('click',function (){
+            const   type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type',type);
+
+            if(type ==='password'){
+                icon.classList.remove('bi-eye-slash-fill');
+                icon.classList.add('bi-eye-fill');
+            }else{
+                icon.classList.remove('bi-eye-fill');
+                icon.classList.add('bi-eye-slash-fill');
+            }
+
+        });
+    </script>
+}

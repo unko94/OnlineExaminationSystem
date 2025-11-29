@@ -1,0 +1,76 @@
+﻿@using System.Text.Json
+@using Utility
+@* <div class="d-flex justify-content-between"> *@
+
+ 
+@* @await Html.PartialAsync("_SideBar")  *@
+@* <div class="container"> *@
+<div class="d-flex mt-5">
+   
+            @await Html.PartialAsync("_SideBar")
+
+    <div class="flex-grow-1 p-4">
+        @{
+
+            List<string> errors = TempData["Errors"] != null ? JsonSerializer.Deserialize<List<string>>(TempData["Errors"].ToString()) : new List<string>();
+
+         
+        }
+        <div class="alert  alert-danger text-danger">
+            <ul>
+                @foreach (var error in errors)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+          
+
+        </div>    
+        <div class="d-inline">
+       
+          
+        </div>
+        <div class="d-inline">
+        
+           <div class="row">
+               <div class="col-4">
+                   <label  class="form-label">Filter by role</label>
+                    <select   id="rolefilter" class="form-select">
+                        <option value="" selected>All</option>
+                        <option value="@SD.Role_Admin" >Admin</option>
+                        <option value="@SD.Role_Student">Student</option>
+                        <option value="@SD.Role_Teacher">Teacher</option>
+                    </select>
+               </div>
+               
+           </div>
+          
+            <a class="btn btn-primary" asp-action="CreateUser">Create User</a>
+        </div>
+
+
+ 
+    <table id="UsersTable" class="table table-bordered table-striped">
+         <thead>
+             <tr>
+
+                 <th>Full Name</th>
+                 <th>User Name</th>
+                 <th>Email Confirmed</th>
+                 <th>Email</th>
+                 <th>Access FailedCount</th>
+                 <th>Lockout Enabled</th>
+                 <th>Lockout End</th>
+                 <th>Role</th>
+                 <th>Action</th>
+
+             </tr>
+         </thead>
+     </table>
+      </div>
+  </div>
+ 
+ @section Scripts{
+      <script src="~/js/UsersTable.js"></script>
+ }
+ 
